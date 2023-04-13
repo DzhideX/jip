@@ -43,7 +43,7 @@ const main = async () => {
   } catch (e) {
     console.log("Error occured, exiting..");
 
-    return -1;
+    process.exit(-1);
   }
 
   return 0;

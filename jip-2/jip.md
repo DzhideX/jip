@@ -1,4 +1,5 @@
 <pre>
+jip: 1
 title: The Joystream Improvement Proposal Process
 authors: [!member](151)
 type: Community

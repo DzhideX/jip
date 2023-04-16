@@ -18,8 +18,7 @@ const verifyFile = async (jipId: JipId) => {
     const headings = getHeadingsFromHTMLContent(html);
 
     // TODO: Verify if the headings are correct.
-
-    console.log(headings);
+    // console.log(headings);
 
     console.log(success("File successfuly validated, no problems found!"));
   } catch (e) {

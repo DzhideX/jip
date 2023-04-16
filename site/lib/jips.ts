@@ -4,7 +4,7 @@ import html from "remark-html";
 import { createTOCFromHTML, integrateTOCLinksIntoHtml, TOCItems } from "./toc";
 import { parsePreamble } from "./preamble";
 import { integrateJoystreamLinksIntoMarkdown } from "./joystream";
-import { JipPreamble } from "./validation";
+import { JipPreamble } from "../verification/preamble";
 import { getJIPDirectory, getAllJipIDs, JipId } from "./files";
 import remarkGfm from "remark-gfm";
 
@@ -14,6 +14,14 @@ export type JipData = BaseJipData & {
   toc: TOCItems;
 };
 
+export const getHTMLFromMarkdown = async (markdownContent: string) =>
+  (
+    await remark()
+      .use(html, { sanitize: true })
+      .use(remarkGfm)
+      .process(integrateJoystreamLinksIntoMarkdown(markdownContent))
+  ).toString();
+
 const getJipData = async (jipId: JipId) => {
   const fileContents = fs.readFileSync(getJIPDirectory(jipId), "utf8");
 
@@ -21,13 +29,7 @@ const getJipData = async (jipId: JipId) => {
     delimiters: ["<pre>", "</pre>"],
   });
 
-  const contentHtml = (
-    await remark()
-      .use(html, { sanitize: true })
-      .use(remarkGfm)
-      .process(integrateJoystreamLinksIntoMarkdown(content))
-  ).toString();
-
+  const contentHtml = await getHTMLFromMarkdown(content);
   const toc = createTOCFromHTML(contentHtml);
   const htmlWithTOCLinks = integrateTOCLinksIntoHtml(contentHtml);
 

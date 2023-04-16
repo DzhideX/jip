@@ -1,4 +1,4 @@
-import { validatePreamble } from "./validation";
+import { validatePreamble } from "../verification/preamble";
 
 const kebabCaseToCamelCase = (kebabCaseString: string) =>
   kebabCaseString.replace(/-./g, (x: string) => x[1].toUpperCase());
@@ -13,7 +13,7 @@ export const parsePreamble = (file: string, { delimiters }: { delimiters: [strin
   const content = fileLines.slice(indexOfSecondDelimiter + 1).join("\n");
 
   const unvalidatedPreamble = preambleLines.reduce((prev: { [key: string]: any }, curr) => {
-    const [key, value] = curr.split(":").map(val => val.trim());
+    const [key, value] = curr.split(":").map((val) => val.trim());
 
     prev[kebabCaseToCamelCase(key)] = value;
 
@@ -24,6 +24,6 @@ export const parsePreamble = (file: string, { delimiters }: { delimiters: [strin
 
   return {
     preamble,
-    content
+    content,
   };
 };

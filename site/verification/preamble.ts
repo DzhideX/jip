@@ -15,7 +15,7 @@ const JipPreambleSchema = z.object({
     z.literal("Recovery"),
     z.literal("Meta"),
     z.literal("Informational"),
-    z.literal("Standard")
+    z.literal("Standard"),
   ]),
   domains: z.optional(z.string()),
   description: z.string(),
@@ -30,12 +30,12 @@ const JipPreambleSchema = z.object({
     z.literal("Enactable"),
     z.literal("Final"),
     z.literal("Rejected"),
-    z.literal("Enacted")
+    z.literal("Enacted"),
   ]),
   lastCallDeadline: z.optional(z.string()),
   created: z.string().regex(SIMPLE_ISO_DATE_REGEX),
   requires: z.optional(z.string()),
-  proposals: z.optional(z.string())
+  proposals: z.optional(z.string()),
 });
 
 export type JipPreamble = z.infer<typeof JipPreambleSchema>;

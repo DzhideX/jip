@@ -22,7 +22,9 @@
   "exclude": ["node_modules"],
   "ts-node": {
     "compilerOptions": {
-      "module": "CommonJS",
-    }
+      "module": "esnext",
+      "isolatedModules": false,
+    },
+    "esm": true
   }
 }

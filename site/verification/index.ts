@@ -1,18 +1,25 @@
 import { parsePreamble } from "../lib/preamble";
+import { getHTMLFromMarkdown, getJipData } from "../lib/jips";
 import { JipId, getAllJipIDs, getJIPDirectory, isStringJipId } from "../lib/files";
 import { FileArgument } from "./types";
 import { success, warning, info, failure } from "./util";
 import fs from "fs";
+import { getHeadingsFromHTMLContent } from "../lib/toc";
 
 const fileArgument = process.argv[2] as undefined | FileArgument;
 
-const validateFile = (jipId: JipId) => {
+const verifyFile = async (jipId: JipId) => {
   try {
     console.log(info(`Validating file with id: ${jipId}`));
 
     const fileContents = fs.readFileSync(getJIPDirectory(jipId), "utf8");
+    const { content } = parsePreamble(fileContents, { delimiters: ["<pre>", "</pre>"] });
+    const html = await getHTMLFromMarkdown(content);
+    const headings = getHeadingsFromHTMLContent(html);
 
-    parsePreamble(fileContents, { delimiters: ["<pre>", "</pre>"] });
+    // TODO: Verify if the headings are correct.
+
+    console.log(headings);
 
     console.log(success("File successfuly validated, no problems found!"));
   } catch (e) {
@@ -21,24 +28,24 @@ const validateFile = (jipId: JipId) => {
   }
 };
 
-const validateFiles = () => {
+const verifyFiles = async () => {
   const jipIds = getAllJipIDs();
   for (let jipId of jipIds) {
-    validateFile(jipId);
+    await verifyFile(jipId);
   }
 };
 
 const main = async () => {
   try {
     if (fileArgument && isStringJipId(fileArgument)) {
-      validateFile(fileArgument as JipId);
+      await verifyFile(fileArgument as JipId);
     } else {
       console.log(
         warning(
           `No file argument has been passed, testing all conforming files in the root folder!`
         )
       );
-      validateFiles();
+      await verifyFiles();
     }
   } catch (e) {
     console.log("Error occured, exiting..");

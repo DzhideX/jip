@@ -3,16 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "addModule": "grep -Fq '\"type\": \"module\",' package.json || (awk -v n=5 -v s='  \"type\": \"module\",' 'NR == n {print s} {print}' package.json > temp && mv temp package.json)",
+    "removeModule": "awk '!/\"type\": \"module\",/' package.json > temp && mv temp package.json",
+    "dev": "yarn removeModule && next dev",
+    "build": "yarn removeModule && next build",
+    "start": "yarn removeModule && next start",
     "lint": "next lint",
     "stylelint": "stylelint \"**/*.{css,module.css}\"",
     "stylelint:fix": "stylelint --fix \"**/*.{css,module.css}\"",
     "lint:all": "yarn lint; yarn stylelint",
     "test": "vitest run",
     "checks:all": "yarn lint:all; yarn test",
-    "validate": "ts-node scripts/validation.ts"
+    "validate": "yarn addModule && ts-node-esm --experimental-specifier-resolution=node verification/index.ts"
   },
   "dependencies": {
     "@types/node": "18.14.6",

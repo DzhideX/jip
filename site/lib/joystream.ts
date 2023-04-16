@@ -1,4 +1,4 @@
-import { JipPreamble } from "./validation";
+import { JipPreamble } from "../verification/preamble";
 
 const JOYSTREAM_MEMBER_REGEX = /\[!member\]\(([0-9]+)\)/g;
 const JOYSTREAM_PROPOSAL_REGEX = /\[!proposal\]\(([0-9]+)\)/g;
@@ -43,7 +43,7 @@ export type MemberQueryResult = {
 const createMultipleUserQuery = (userIds: number[]) => {
   return `
     {
-      ${userIds.map(userId => MEMBER_QUERY_ELEMENT(userId))}
+      ${userIds.map((userId) => MEMBER_QUERY_ELEMENT(userId))}
     }
   `;
 };
@@ -54,7 +54,7 @@ export const getUserIdFromUsersString = (usersInput: string) => {
 
   if (!matchedUserIdStrings) return userIds;
 
-  userIds = matchedUserIdStrings.map(userId =>
+  userIds = matchedUserIdStrings.map((userId) =>
     Number(userId.replace(JOYSTREAM_MEMBER_REGEX, "$1"))
   );
 
@@ -67,14 +67,14 @@ export const fetchUserHandlesWithIds = async (joystreamIds: number[]) => {
   const res = await fetch(QUERY_URL, {
     method: "POST",
     headers: { "Content-type": "application/json" },
-    body: JSON.stringify({ query: createMultipleUserQuery(joystreamIds) })
+    body: JSON.stringify({ query: createMultipleUserQuery(joystreamIds) }),
   });
 
   if (!res.ok) return memberHandles;
 
   const { data } = (await res.json()) as { data: MemberQueryResult };
 
-  return joystreamIds.map(joystreamId => [joystreamId, data[`member${joystreamId}`][0].handle]);
+  return joystreamIds.map((joystreamId) => [joystreamId, data[`member${joystreamId}`][0].handle]);
 };
 
 export const getOwnersFromPreamble = async (preamble: JipPreamble) => {

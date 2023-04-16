@@ -14,7 +14,7 @@ const generateContentAndLinkFromHeading = (heading: string, linkValueTracker: Ar
   const baseLinkValue = content.toLowerCase().replace(/ /g, "-");
 
   while (
-    linkValueTracker.find(linkValue => linkValue === generateLinkValue(baseLinkValue, counter))
+    linkValueTracker.find((linkValue) => linkValue === generateLinkValue(baseLinkValue, counter))
   ) {
     counter++;
   }
@@ -24,9 +24,11 @@ const generateContentAndLinkFromHeading = (heading: string, linkValueTracker: Ar
 
   return {
     content,
-    link
+    link,
   };
 };
+
+export const getHeadingsFromHTMLContent = (html: string) => html.match(TOC_HEADINGS_REGEX);
 
 export type BaseTocItem = { content: string; link: string };
 export type TOCItems = Array<
@@ -34,7 +36,7 @@ export type TOCItems = Array<
 >;
 
 export const createTOCFromHTML = (html: string) => {
-  const mainHeadings = html.match(TOC_HEADINGS_REGEX);
+  const mainHeadings = getHeadingsFromHTMLContent(html);
 
   const toc: TOCItems = [];
 
@@ -50,26 +52,26 @@ export const createTOCFromHTML = (html: string) => {
       toc.push({
         children: [],
         content,
-        link
+        link,
       });
       lastH1 = link;
     }
 
-    const h1Items = toc.find(h1 => h1.link === lastH1);
+    const h1Items = toc.find((h1) => h1.link === lastH1);
     if (mainHeading[2] == "2" && h1Items) {
       h1Items.children.push({
         children: [],
         content,
-        link
+        link,
       });
       lastH2 = link;
     }
 
-    const h2Items = h1Items?.children.find(h2 => h2.link === lastH2);
+    const h2Items = h1Items?.children.find((h2) => h2.link === lastH2);
     if (mainHeading[2] == "3" && h2Items) {
       h2Items.children.push({
         content,
-        link
+        link,
       });
     }
   }
@@ -80,7 +82,7 @@ export const createTOCFromHTML = (html: string) => {
 export const integrateTOCLinksIntoHtml = (html: string) => {
   let usedLinkValues: Array<string> = [];
 
-  return html.replace(ALL_HEADINGS_REGEX, match => {
+  return html.replace(ALL_HEADINGS_REGEX, (match) => {
     const { link } = generateContentAndLinkFromHeading(match, usedLinkValues);
 
     return match.substring(0, 3) + ` id="${link}"` + match.substring(3);

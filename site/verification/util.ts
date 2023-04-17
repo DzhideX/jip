@@ -15,4 +15,5 @@ export const success = (message: string) => `[${colorString("green", "SUCCESS")}
 
 export const info = (message: string) => `[${colorString("white", "INFO")}] ${message}`;
 
-export const failure = (message: string) => `[${colorString("red", "FAILURE")}] ${message}`;
+export const failure = (message: string, error?: unknown) =>
+  `[${colorString("red", "FAILURE")}] ${message}${error ? `\n${error}` : ""}`;

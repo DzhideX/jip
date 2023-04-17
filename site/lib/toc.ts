@@ -8,9 +8,15 @@ const generateLinkValue = (baseLinkValue: string, counter: number) => {
   return `${baseLinkValue}-${counter}`;
 };
 
-const generateContentAndLinkFromHeading = (heading: string, linkValueTracker: Array<string>) => {
+export const stripContentFromHeading = (heading: string) =>
+  heading.substring(4, heading.length - 5).replace(ANY_HTML_TAG_REGEX, "");
+
+export const generateContentAndLinkFromHeading = (
+  heading: string,
+  linkValueTracker: Array<string>
+) => {
   let counter = 0;
-  const content = heading.substring(4, heading.length - 5).replace(ANY_HTML_TAG_REGEX, "");
+  const content = stripContentFromHeading(heading);
   const baseLinkValue = content.toLowerCase().replace(/ /g, "-");
 
   while (

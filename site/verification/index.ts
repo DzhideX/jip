@@ -1,10 +1,9 @@
 import { parsePreamble } from "../lib/preamble";
-import { getHTMLFromMarkdown, getJipData } from "../lib/jips";
 import { JipId, getAllJipIDs, getJIPDirectory, isStringJipId } from "../lib/files";
 import { FileArgument } from "./types";
 import { success, warning, info, failure } from "./util";
 import fs from "fs";
-import { getHeadingsFromHTMLContent } from "../lib/toc";
+import { verifyContent } from "./content";
 
 const fileArgument = process.argv[2] as undefined | FileArgument;
 
@@ -14,15 +13,12 @@ const verifyFile = async (jipId: JipId) => {
 
     const fileContents = fs.readFileSync(getJIPDirectory(jipId), "utf8");
     const { content } = parsePreamble(fileContents, { delimiters: ["<pre>", "</pre>"] });
-    const html = await getHTMLFromMarkdown(content);
-    const headings = getHeadingsFromHTMLContent(html);
 
-    // TODO: Verify if the headings are correct.
-    // console.log(headings);
+    await verifyContent(content);
 
     console.log(success("File successfuly validated, no problems found!"));
   } catch (e) {
-    console.log(failure(`There has been a problem while trying to validate this file.\n${e}`));
+    console.log(failure(`There has been a problem while trying to validate this file.`, e));
     throw e;
   }
 };
@@ -47,7 +43,7 @@ const main = async () => {
       await verifyFiles();
     }
   } catch (e) {
-    console.log("Error occured, exiting..");
+    // console.log("Error occured, exiting..");
 
     process.exit(-1);
   }

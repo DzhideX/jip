@@ -2,6 +2,7 @@
   "name": "site",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "addModule": "grep -Fq '\"type\": \"module\",' package.json || (awk -v n=5 -v s='  \"type\": \"module\",' 'NR == n {print s} {print}' package.json > temp && mv temp package.json)",
     "removeModule": "awk '!/\"type\": \"module\",/' package.json > temp && mv temp package.json",

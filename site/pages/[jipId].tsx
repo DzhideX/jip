@@ -4,8 +4,9 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import { parseISO, format } from "date-fns";
 import { ParsedUrlQuery } from "querystring";
 import Link from "next/link";
-import { JipId }from "@/lib/files";
+import { JipId, saveJipToIndex }from "@/lib/files";
 import { getAllJipIDs, getJipData, JipData } from "@/lib/jips";
+import index from "@/lib/index";
 
 import styles from "@/styles/jip.module.css";
 import { BaseTocItem } from "@/lib/toc";
@@ -23,6 +24,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const jipId = (params as ParsedUrlQuery).jipId as JipId;
   const jipData = await getJipData(jipId);
+
+  index.add(jipId, jipData.rawContent);
+
+  index.export((key: string, data: string) => {
+    saveJipToIndex(key, data);
+  });
 
   return {
     props: {

@@ -16,3 +16,21 @@ export const getAllJipIDs = () => {
 
   return rootFolderJIPs;
 };
+
+export const saveJipToIndex = (key: string, data: string) => {
+  fs.writeFileSync(path.join(process.cwd(), `index/${key}.json`), data);
+};
+
+export const readJipFromIndex = () => {
+  const indexPath = path.join(process.cwd(), `index`);
+  const files = fs.readdirSync(indexPath, "utf-8").filter((fileName) => fileName.includes(".json"));
+
+  return files.reduce((acc: any, fileName) => {
+    const fileContents = fs.readFileSync(indexPath + `/${fileName}`, "utf8");
+
+    return {
+      ...acc,
+      [fileName.replace(".json", "")]: JSON.parse(fileContents),
+    };
+  }, {});
+};

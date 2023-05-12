@@ -1,20 +1,34 @@
+import React, { useState } from "react";
 import Head from "next/head";
 import Layout from "@/components/layout";
 import Link from "next/link";
 import { parseISO, format } from "date-fns";
 import { GetStaticProps } from "next";
+import { useQuery } from "@tanstack/react-query";
 
-import { BaseJipData, getAllJipsPreambleData } from "@/lib/jips";
+import { BaseJipData, getAllJipsPreambleData, getJipData } from "@/lib/jips";
 import { getOwnersFromPreamble, PIONEER_MEMBER_LINK } from "@/lib/joystream";
-import { JipId } from "@/lib/files";
+import { JipId, saveJipToIndex } from "@/lib/files";
+import index from "@/lib/index";
 
 import styles from "@/styles/index.module.css";
-import React from "react";
 
 export const getStaticProps: GetStaticProps = async () => {
   const jipsPreambleData = getAllJipsPreambleData();
 
+  // TODO: Huh?
   const owners = await getOwnersFromPreamble(jipsPreambleData[0].preamble);
+
+  for(const { jipId } of jipsPreambleData) {
+    const jipData = await getJipData(jipId);
+
+    index.add(jipId, jipData.rawContent);
+  }
+
+  index.export((key: string, data: string) => {
+    // console.log(key, data);
+    saveJipToIndex(key, data);
+  });
 
   const props = JSON.parse(
     JSON.stringify({
@@ -65,6 +79,16 @@ export default function Home({
   jipsPreambleData: Array<BaseJipData>;
   owners: Array<[number, string]>;
 }) {
+  const [searchQuery, setSearchQuery] = useState("snorlax");
+  const { isLoading, error, data } = useQuery({ queryKey: ['searchQuery', searchQuery], queryFn: async () => { 
+    const res = await fetch(`api/search?searchQuery=${searchQuery}`);
+    return res.json();
+   }});
+
+  if(!isLoading && !error) {
+    console.log(data);
+  }
+
   return (
     <Layout>
       <Head>
@@ -76,6 +100,7 @@ export default function Home({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <section className={styles.landing}>
+      <input style={{ margin: "20px auto -20px", width: "350px", height: "30px"}} type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
         <div className={styles.jips}>
           {jipsPreambleData.map(({ jipId, preamble: { created: date, title, stage } }) => (
             <JipItem

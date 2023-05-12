@@ -15,7 +15,7 @@ A process for how to propose and enact new standards for the Joystream Network a
 
 # Problem
 
-The subject of this proposal is how to document, propose and update standards in the Joystream Network. By standards one intends to refer very broadly to all protocols, formats, processes or policies involved in coordinating activity among participants in the Joystream project. Like many complex systems, many of these standards have started out initially as unspecified, undocumented or purely embodied as implementations. This has left the community without a body of high quality and coherent documentation, and also no process by which to generate such documentation as standards evolve. Even more importantly, no process exists describing how to revise, extend or create such standards. This limits the pace, safety, quality and adoption of such standards evolution.
+The subject of this proposal is how to document, propose and update standards in the Joystream Network. By standards one intends to refer very broadly to all protocols, formats, processes or policies involved in coordinating activity among participants in the Joystream project. Like many complex systems, many of these standards have started out initially as unspecified, undocumented or purely embodied as implementations. This has left the community without a body of high quality and coherent documentation, and also no process by which to generate such documentation as standards evolve. Even more importantly, no process exists describing how to revise, extend or create such standards. This limits the pace, safety, quality and adoption of such standards evolution. aaron
 
 # Specification
 

@@ -12,6 +12,7 @@ export type BaseJipData = { jipId: JipId; preamble: JipPreamble };
 export type JipData = BaseJipData & {
   contentHtml: string;
   toc: TOCItems;
+  rawContent: string;
 };
 
 export const getHTMLFromMarkdown = async (markdownContent: string) =>
@@ -38,6 +39,7 @@ const getJipData = async (jipId: JipId) => {
     contentHtml: htmlWithTOCLinks,
     preamble,
     toc: toc,
+    rawContent: content,
   };
 };
 

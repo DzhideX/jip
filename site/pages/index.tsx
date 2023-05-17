@@ -1,20 +1,32 @@
+import React from "react";
 import Head from "next/head";
 import Layout from "@/components/layout";
 import Link from "next/link";
 import { parseISO, format } from "date-fns";
 import { GetStaticProps } from "next";
 
-import { BaseJipData, getAllJipsPreambleData } from "@/lib/jips";
+import { BaseJipData, getAllJipsPreambleData, getJipData } from "@/lib/jips";
 import { getOwnersFromPreamble, PIONEER_MEMBER_LINK } from "@/lib/joystream";
-import { JipId } from "@/lib/files";
+import { JipId, saveJipToIndex } from "@/lib/files";
+import index from "@/lib/index";
 
 import styles from "@/styles/index.module.css";
-import React from "react";
 
 export const getStaticProps: GetStaticProps = async () => {
   const jipsPreambleData = getAllJipsPreambleData();
 
+  // TODO: Does this make sense?
   const owners = await getOwnersFromPreamble(jipsPreambleData[0].preamble);
+
+  for(const { jipId } of jipsPreambleData) {
+    const jipData = await getJipData(jipId);
+
+    index.add(jipId, jipData.rawContent);
+  }
+
+  index.export((key: string, data: string) => {
+    saveJipToIndex(key, data);
+  });
 
   const props = JSON.parse(
     JSON.stringify({

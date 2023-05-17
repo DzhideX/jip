@@ -2,6 +2,8 @@ import fs from "fs";
 import path from "path";
 
 export const JIP_FOLDER_IDENTIFIER = "jip-";
+export const SEARCH_INDEX_FOLDER_NAME = "search-index";
+
 export type JipId = `${typeof JIP_FOLDER_IDENTIFIER}${number}`;
 
 export const getJIPDirectory = (jipId: JipId) => path.join(process.cwd(), `../${jipId}/jip.md`);
@@ -15,4 +17,22 @@ export const getAllJipIDs = () => {
     .filter((itemName) => itemName.includes(JIP_FOLDER_IDENTIFIER)) as Array<JipId>;
 
   return rootFolderJIPs;
+};
+
+export const saveJipToIndex = (key: string, data: string) => {
+  fs.writeFileSync(path.join(process.cwd(), `${SEARCH_INDEX_FOLDER_NAME}/${key}.json`), data);
+};
+
+export const readJipFromIndex = () => {
+  const indexPath = path.join(process.cwd(), SEARCH_INDEX_FOLDER_NAME);
+  const files = fs.readdirSync(indexPath, "utf-8").filter((fileName) => fileName.includes(".json"));
+
+  return files.reduce((acc: any, fileName) => {
+    const fileContents = fs.readFileSync(indexPath + `/${fileName}`, "utf8");
+
+    return {
+      ...acc,
+      [fileName.replace(".json", "")]: JSON.parse(fileContents),
+    };
+  }, {});
 };

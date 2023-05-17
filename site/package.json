@@ -2,7 +2,6 @@
   "name": "site",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "addModule": "grep -Fq '\"type\": \"module\",' package.json || (awk -v n=5 -v s='  \"type\": \"module\",' 'NR == n {print s} {print}' package.json > temp && mv temp package.json)",
     "removeModule": "awk '!/\"type\": \"module\",/' package.json > temp && mv temp package.json",
@@ -18,11 +17,13 @@
     "validate": "yarn addModule && ts-node-esm --experimental-specifier-resolution=node verification/index.ts"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.29.7",
     "@types/node": "18.14.6",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "date-fns": "^2.29.3",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "flexsearch": "^0.7.31",
     "next": "13.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",

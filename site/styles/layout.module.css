@@ -1,11 +1,21 @@
 .header {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 80px;
   padding: 0 var(--page-padding);
   text-align: center;
   border-bottom: 1px solid var(--color-grey);
+  margin-top: 10px;
+}
+
+.input {
+  margin: 10px 0;
+  width: 250px;
+  border: none;
+  border-bottom: 2px solid var(--color-grey);
+  padding: 6px;
 }
 
 .heading {

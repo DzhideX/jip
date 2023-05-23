@@ -10,12 +10,34 @@
   margin-top: 10px;
 }
 
-.input {
+.searchWrapper {
+  position: relative;
+}
+
+.search {
   margin: 10px 0;
   width: 250px;
   border: none;
-  border-bottom: 2px solid var(--color-grey);
+  border: 2px solid var(--color-grey);
   padding: 6px;
+}
+
+.searchDropdown {
+  width: 250px;
+  position: absolute;
+  background-color: white;
+  border: 2px solid var(--color-grey);
+  margin-top: -11px;
+}
+
+.searchDropdownItem {
+  width: 100%;
+  padding: 10px;
+}
+
+.searchDropdownItem:hover {
+  background-color: var(--color-grey);
+  cursor: pointer;
 }
 
 .heading {

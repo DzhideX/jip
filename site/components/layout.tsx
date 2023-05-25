@@ -10,7 +10,7 @@ import styles from "@/styles/layout.module.css";
 
 const SearchDropdown = ({ jipIds }: { jipIds: Array<JipId>}) => (
   <div className={styles.searchDropdown}>
-    {jipIds.map((jipId) => <div className={styles.searchDropdownItem}>{jipId}</div>)}
+    {jipIds.map((jipId) => <div className={styles.searchDropdownItem} key={jipId}>{jipId}</div>)}
   </div>
 )
 
@@ -22,10 +22,6 @@ const Search = () => {
     const res = await fetch(`api/search?searchQuery=${searchQuery}`);
     return res.json();
    }});
-
-  if(!isLoading && !error && data) {
-    console.log(data);
-  }
 
   return (
     <div className={styles.searchWrapper}>

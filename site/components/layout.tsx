@@ -8,9 +8,9 @@ import { JipId } from "@/lib/files";
 
 import styles from "@/styles/layout.module.css";
 
-const SearchDropdown = ({ jipIds }: { jipIds: Array<JipId>}) => (
+const SearchDropdown = ({ jipIds, clearSearch }: { jipIds: Array<JipId>, clearSearch: () => void }) => (
   <div className={styles.searchDropdown}>
-    {jipIds.map((jipId) => <div className={styles.searchDropdownItem} key={jipId}>{jipId}</div>)}
+    {jipIds.map((jipId) => <Link href={`/${jipId}`} key={jipId} onClick={() => clearSearch()}><div className={styles.searchDropdownItem} >{jipId}</div></Link>)}
   </div>
 )
 
@@ -27,7 +27,7 @@ const Search = () => {
     <div className={styles.searchWrapper}>
       <input type="text" className={styles.search} onChange={debouncedSearch} placeholder="Search.." />
       {/* {isLoading && <div>Loading...</div>} */}
-      {!isLoading && !error && data?.results && data.results.length > 0 && <SearchDropdown jipIds={data.results} />}
+      {!isLoading && !error && data?.results && data.results.length > 0 && <SearchDropdown jipIds={data.results} clearSearch={() => setSearchQuery("")} />}
     </div>
   )
 }

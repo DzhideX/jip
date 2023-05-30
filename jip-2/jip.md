@@ -192,7 +192,7 @@ Here the structure of the document is described.
 - **Specification:** A neutral, precise and clear description of a particular solution. It should be clear and detailed enough to allow independent third parties to implement or instantiate purely based on this text and associated materials.
 - **Rationale:** The rationale fleshes out the specification by describing what motivated the design and why particular design decisions were made. It should describe alternate designs that were considered and related work.
 - **Backwards Compatibility (optional):** If this standard introduce some backwards incompatibility, in the sense that third parties will have to change their software in order to retain interoperability for their existing purposes, then this must be clearly identified and described.
-- **Test Cases (optional):** Test cases for any third party whishing to make an implementation of the change. Should either be inlined in the JIP as data (such as input/expected output pairs, or as auxillary asset).
+- **Test Cases (optional):** Test cases for any third party whishing to make an implementation of the change. Should either be inlined in the JIP as data (such as input/expected output pairs, or as auxiliary asset).
 - **Reference Implementation (optional):** Reference/example implementation that people can use to assist in understanding or implementing this specification.
 - **Security Considerations (optional):** Discussion of the security implications/considerations relevant to the proposed change. Include information that might be important for security discussions, surfaces risks and can be used throughout the life-cycle of the proposal. E.g. include security-relevant design decisions, concerns, important discussions, implementation-specific guidance and pitfalls, an outline of threats and risks and how they are being addressed.
 - **Copyright:** Copyright Waiver - All JIPs must be in the public domain. The copyright waiver MUST link to the license file and use the following wording: `Copyright and related rights waived via [CC0](/LICENSE).`
@@ -310,7 +310,7 @@ For all stage transitions, this must be updated in JIP document by the editor, a
 - git log of new commits introduced which alter the JIP document
 
 Any such revisions must also be reflected in the changelog.
-This is obviously only feasible only after the transition to `Review` from `Draft`, when the discussion thread is created. While the authors provide the initial draft, revisions including their contributions can only occur in stages `Draft`, `Review`, `Last Call` and `Living` after this, and these can only affect the body section of the JIP document, or auxillary assets, not the header. The authors should always try to batch together logically coherent sets of changes in order to not generate too much noise in the thread.
+This is obviously only feasible only after the transition to `Review` from `Draft`, when the discussion thread is created. While the authors provide the initial draft, revisions including their contributions can only occur in stages `Draft`, `Review`, `Last Call` and `Living` after this, and these can only affect the body section of the JIP document, or auxiliary assets, not the header. The authors should always try to batch together logically coherent sets of changes in order to not generate too much noise in the thread.
 
 #### Stagnation
 

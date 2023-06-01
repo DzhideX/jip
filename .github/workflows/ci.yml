@@ -37,3 +37,16 @@ jobs:
           check_filenames: true
           ignore_words_file: config/.codespell-whitelist
           skip: ./site,./.git,LICENSE
+
+  markdownlint:
+    name: MarkdownLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v10
+        with:
+          globs: "**/jip-*/jip.md"

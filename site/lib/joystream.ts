@@ -10,20 +10,14 @@ const JOYSTREAM_FORUM_THREAD_POST_REGEX = /\[!forum_post\]\(([0-9]+),([0-9]+),([
 
 export const PIONEER_PROPOSAL_LINK = (proposalId: string) =>
   `https://pioneerapp.xyz/#/proposals/preview/${proposalId}`;
-export const PIONEER_PROPOSAL_DISCUSSION_LINK = (
-  proposalId: string,
-  post: string,
-  revision?: string
-) => `https://pioneerapp.xyz/#/proposals/preview/${proposalId}?post=${post}`;
+export const PIONEER_PROPOSAL_DISCUSSION_LINK = (proposalId: string, post: string) =>
+  `https://pioneerapp.xyz/#/proposals/preview/${proposalId}?post=${post}`;
 export const PIONEER_FORUM_CATEGORY_LINK = (categoryId: string) =>
   `https://pioneerapp.xyz/#/forum/category/${categoryId}`;
 export const PIONEER_FORUM_THREAD_LINK = (threadId: string) =>
   `https://pioneerapp.xyz/#/forum/thread/${threadId}`;
-export const PIONEER_FORUM_THREAD_POST_LINK = (
-  threadId: string,
-  postId: string,
-  revision?: string
-) => `https://pioneerapp.xyz/#/forum/thread/${threadId}?post=${postId}`;
+export const PIONEER_FORUM_THREAD_POST_LINK = (threadId: string, postId: string) =>
+  `https://pioneerapp.xyz/#/forum/thread/${threadId}?post=${postId}`;
 export const PIONEER_MEMBER_LINK = (memberId: string) =>
   `https://pioneerapp.xyz/#/members/${memberId}`;
 
